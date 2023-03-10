@@ -1,0 +1,5 @@
+PIXでデータを取るために
+・優先グラフィックAPIはDX11じゃなくDX12
+・Build Settingsで「Development Build」がon
+・フルスクリーンではなくwindowモードでbuild
+としている

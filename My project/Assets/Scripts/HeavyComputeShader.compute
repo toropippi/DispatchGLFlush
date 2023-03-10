@@ -1,0 +1,26 @@
+#pragma kernel HeavyFunc
+#pragma enable_d3d11_debug_symbols
+
+#define TPB 64
+
+
+RWStructuredBuffer<uint> buffer;
+int loopnum, WX, WY;
+
+
+[numthreads(TPB, 1, 1)]
+void HeavyFunc(uint2 id : SV_DispatchThreadID)
+{
+    float tt = 0.0;
+    for (int j = 0; j < WX / TPB; j++)
+    {
+        for (int i = 0; i < loopnum; i++)
+        {
+            tt = cos(id.x + tt + 3.0 / (1.2 + sin(0.0011 / (id.x + 3.42134))));
+            tt = 3.4 / sqrt((id.y + 0.123) / (tt + 2.0));
+            tt = cos(tt * 1.2) * sin(0.3 + tt) + exp(2.3 * tt);
+        }
+        //uint outt = (uint)tt;
+        buffer[(j * TPB + id.x) + id.y * WX] = tt;
+    }
+}
