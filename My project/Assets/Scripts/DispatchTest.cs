@@ -6,32 +6,29 @@ public class DispatchTest : MonoBehaviour
 {
     const int width = 1920;
     const int height = 1080;
-
     //compute shaderü‚è
     [SerializeField] ComputeShader cs;
-    ComputeBuffer computeBuffer = null;
-    int kernelHeavyFunc;
-
+    private ComputeBuffer computeBuffer = null;
+    private int kernelHeavyFunc;
     //‚»‚Ì‘¼
-    int flamecnt;
-    int n;
-    int[] host;
-    int lasttime;
-    int deltatime;
+    private int flamecnt;
+    private int n;
+    private int[] host;
+    private int lasttime;
+    private int deltatime;
 
-    int time12, time23, time34;
-    float avgdeltatime;
-
+    private int time12, time23, time34;
+    private float avgdeltatime;
 
     [SerializeField] int loopnum = 600;//‹­‚¢GPU‚È‚ç‚à‚Á‚Æ‘‚â‚µ‚Ä
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         flamecnt = 0;
         avgdeltatime = 0;
         lasttime = Gettime();
-        
+
         n = width * height;
         computeBuffer = new ComputeBuffer(n, 4);
         host = new int[n];
@@ -53,7 +50,7 @@ public class DispatchTest : MonoBehaviour
 
         var time2 = Gettime();
 
-        Thread.Sleep(50);//50ms‘Ò‚Â
+        Thread.Sleep(50);//50ms‘Ò‚ÂBCPU‚Ìd‚¢ˆ—‚ğ‘z’è
 
         var time3 = Gettime();
 
@@ -72,15 +69,10 @@ public class DispatchTest : MonoBehaviour
     }
 
 
-
-
     private void OnDestroy()
     {
-        if (computeBuffer != null)
-            computeBuffer.Release();
+        computeBuffer.Release();
     }
-
-
 
     void OnGUI()
     {
@@ -110,6 +102,4 @@ public class DispatchTest : MonoBehaviour
         return DateTime.Now.Millisecond + DateTime.Now.Second * 1000
             + DateTime.Now.Minute * 60 * 1000 + DateTime.Now.Hour * 60 * 60 * 1000;
     }
-
 }
-
